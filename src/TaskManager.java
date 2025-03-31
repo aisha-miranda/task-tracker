@@ -6,7 +6,7 @@ public class TaskManager {
     private HashMap<Integer, Epic> epics = new HashMap<>();
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
-    private int uniqueId = 0;
+    private int uniqueId = 1;
 
     private int getUniqueId() {
         return uniqueId++;
