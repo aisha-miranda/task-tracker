@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class inMemoryHistoryManager implements HistoryManager {
+public class InMemoryHistoryManager implements HistoryManager {
     private static final int MAX_HISTORY_SIZE = 10;
     private final List<Task> history = new ArrayList<>();
 
