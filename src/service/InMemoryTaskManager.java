@@ -1,3 +1,9 @@
+package service;
+
+import model.Epic;
+import model.Subtask;
+import model.Task;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,7 +14,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final HistoryManager historyManager;
     private int uniqueId = 1;
 
-    public inMemoryTaskManager(HistoryManager historyManager) {
+    public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
         this.subtasks = new HashMap<>();
         this.epics = new HashMap<>();
