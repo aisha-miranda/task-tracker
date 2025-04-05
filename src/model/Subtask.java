@@ -1,4 +1,6 @@
-public class Subtask extends Task{
+package model;
+
+public class Subtask extends Task {
     private Epic epic;
 
     public Subtask(String title, String description, Epic epic) {
