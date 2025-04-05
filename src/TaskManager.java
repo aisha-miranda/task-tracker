@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public interface TaskManager {
     void createTask(Task task);
     void createEpic(Epic epic);
