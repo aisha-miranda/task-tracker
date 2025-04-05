@@ -30,8 +30,6 @@ public class Main {
         taskManager.createSubtask(subtask5);
         taskManager.createSubtask(subtask6);
 
-        // 1, 5 - epic
-        // 2 3 4 6 7 8 - subtask
         taskManager.getEpicById(1);
         taskManager.getSubtaskById(2);
         taskManager.getSubtaskById(3);
@@ -44,8 +42,6 @@ public class Main {
         taskManager.getSubtaskById(8);
 
         System.out.println(historyManager.getHistory());
-
     }
-
 }
 
