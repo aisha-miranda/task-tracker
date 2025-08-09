@@ -23,6 +23,34 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
+    public void linkLast(Task task) {
+        Node newNode = new Node(tail, task, null);
+        if (head == null) {
+            head = newNode;
+        } else {
+            tail.next = newNode;
+        }
+        tail = newNode;
+        size++;
+    }
+
+    public void removeNode(Node node){
+        if (node==null){
+            return;
+        }
+        if (node.prev == null) {
+            head = node.next;
+            head.prev = null;
+        } else if (node.next == null){
+            tail = node.prev;
+            tail.next = null;
+        } else {
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+        }
+        size--;
+    }
+
     @Override
     public void add(Task task) {
         if (task != null) {
