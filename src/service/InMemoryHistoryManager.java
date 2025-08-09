@@ -7,7 +7,21 @@ import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private static final int MAX_HISTORY_SIZE = 10;
+    public Node head;
+    public Node tail;
     private final List<Task> history = new ArrayList<>();
+
+    class Node {
+        Task task;
+        Node next;
+        Node prev;
+
+        public Node(Node prev, Task task, Node next) {
+            this.task = task;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
 
     @Override
     public void add(Task task) {
