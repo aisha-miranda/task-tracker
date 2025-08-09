@@ -16,10 +16,10 @@ public class Epic extends Task {
         boolean allDone = true;
 
         for (Subtask subtask : subtasks.values()) {
-            if (!subtask.getStatus().equals("NEW")) {
+            if (!subtask.getStatus().equals(Statuses.NEW)) {
                 allNew = false;
             }
-            if (!subtask.getStatus().equals("DONE")) {
+            if (!subtask.getStatus().equals(Statuses.DONE)) {
                 allDone = false;
             }
 
@@ -29,11 +29,11 @@ public class Epic extends Task {
         }
 
         if (subtasks.isEmpty() || allNew) {
-            setStatus("NEW");
+            setStatus(Statuses.NEW);
         } else if (allDone) {
-            setStatus("DONE");
+            setStatus(Statuses.DONE);
         } else {
-            setStatus("IN_PROGRESS");
+            setStatus(Statuses.IN_PROGRESS);
         }
     }
 

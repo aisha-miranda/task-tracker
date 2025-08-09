@@ -9,7 +9,7 @@ public class Subtask extends Task {
     }
 
     @Override
-    public void setStatus(String status) {
+    public void setStatus(Statuses status) {
         super.setStatus(status);
         epic.updateStatus();
     }
