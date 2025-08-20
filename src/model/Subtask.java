@@ -18,4 +18,18 @@ public class Subtask extends Task {
     public Epic getEpic() {
         return epic;
     }
+
+    public int getEpicId() {
+        return epic.id;
+    }
+
+    @Override
+    public String toString() {
+        return "Subtask{" +
+                "title= " + title +
+                ", description=" + description +
+                ", id= " + getId() +
+                ", status= " + status + "}";
+    }
+
 }

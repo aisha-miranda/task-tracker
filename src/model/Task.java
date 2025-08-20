@@ -46,7 +46,18 @@ public class Task {
         this.status = status;
     }
 
+    @Override
     public String toString() {
-        return Integer.toString(id);
+        return "Task{" +
+                "title= " + title +
+                ", description=" + description +
+                ", id= " + getId() +
+                ", status= " + status + "}";
     }
+
+    public TaskType getType() {
+        return type;
+    }
+
+
 }

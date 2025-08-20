@@ -49,4 +49,13 @@ public class Epic extends Task {
     public void removeSubtaskById(int id) {
         subtasks.remove(id);
     }
+
+    @Override
+    public String toString() {
+        return "Epic{" +
+                "title= " + title +
+                ", description=" + description +
+                ", id= " + getId() +
+                ", status= " + status + "}";
+    }
 }
