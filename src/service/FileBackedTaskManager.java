@@ -104,4 +104,31 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return sb.toString();
     }
 
+    public void save() {
+        try (Writer writer = new FileWriter(file)) {
+            List<Task> tasks = getTasks();
+            if (!tasks.isEmpty()) {
+                for (Task task : tasks) {
+                    writer.write(String.format("%s\n", toString(task)));
+                }
+            }
+            List<Epic> epics = getEpics();
+            if (!epics.isEmpty()) {
+                for (Epic epic : epics) {
+                    writer.write(String.format("%s\n", toString(epic)));
+                }
+
+            }
+            List<Subtask> subtasks = getSubtasks();
+            if (!subtasks.isEmpty()) {
+                for (Subtask subtask : subtasks) {
+                    writer.write(String.format("%s\n", toString(subtask)));
+                }
+            }
+            writer.write("\n");
+            writer.write(historyToString(getHistoryManager()));
+        } catch (IOException exception) {
+            throw new ManagerSaveException("Невозможно записать данные в файл.");
+        }
+    }
 }
