@@ -96,7 +96,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return String.format("%s, %s, %s, %s, %s", task.getId(), task.getType(), task.getTitle(), task.getStatus(), task.getDescription());
     }
 
-
-
+    public static String historyToString(HistoryManager manager) {
+        StringBuilder sb = new StringBuilder();
+        for (Task task : manager.getHistory()) {
+            sb.append(task.getId()).append(", ");
+        }
+        return sb.toString();
+    }
 
 }
