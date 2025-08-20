@@ -131,4 +131,36 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             throw new ManagerSaveException("Невозможно записать данные в файл.");
         }
     }
+
+    public Task fromString(String string) {
+        String[] stringArray = string.split(", ");
+        int id = Integer.parseInt(stringArray[0]);
+        TaskType type = TaskType.valueOf(stringArray[1]);
+        String title = stringArray[2];
+        Statuses status = Statuses.valueOf(stringArray[3]);
+        String description = stringArray[4];
+
+        Task task;
+        if (type == TaskType.TASK) {
+            task = new Task(title, description);
+            task.setStatus(status);
+            createTask(task);
+            task.setId(id);
+        } else if (type == TaskType.EPIC) {
+            task = new Epic(title, description);
+            task.setStatus(status);
+            createEpic((Epic) task);
+            task.setId(id);
+        } else {
+            int epicId = Integer.parseInt(stringArray[5]);
+            Epic epic = getEpicsMap().get(epicId);
+            task = new Subtask(title, description, epic);
+            task.setStatus(status);
+            createSubtask((Subtask) task);
+            task.setId(id);
+        }
+        return task;
+    }
+
+
 }
