@@ -199,4 +199,37 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             throw new ManagerSaveException("Невозможно прочесть файл.");
         }
     }
+
+    public static void main(String[] args){
+        FileBackedTaskManager manager = new FileBackedTaskManager(new InMemoryHistoryManager(), "C:\\Users\\Aisha\\OneDrive\\Документы\\Documents\\file_for_manager.rtf");
+
+        Epic firstEpic = new Epic("Эпик 1 (с трёмя подзадачами)", "Описание эпика 1", manager);
+        manager.createEpic(firstEpic);
+        Epic secondEpic = new Epic("Эпик 2 (без подзадач)", "Описание эпика 1", manager);
+        manager.createEpic(secondEpic);
+
+        Task firstTask = new Task("Задача 1", "Описание задачи 1", manager);
+        manager.createTask(firstTask);
+        Task secondTask = new Task("Задача 2", "Описание задачи 2", manager);
+        manager.createTask(secondTask);
+
+        Subtask firstEpicFirstSubtask = new Subtask("Подзадача 1 эпика 1", "Описание подзадачи 1 эпика 1", firstEpic, manager);
+        Subtask firstEpicSecondSubtask = new Subtask("Подзадача 2 эпика 1", "Описание подзадачи 2 эпика 1", firstEpic, manager);
+        Subtask firstEpicThirdSubtask = new Subtask("Подзадача 3 эпика 1", "Описание подзадачи 3 эпика 1", firstEpic, manager);
+        manager.createSubtask(firstEpicFirstSubtask);
+        manager.createSubtask(firstEpicSecondSubtask);
+        manager.createSubtask(firstEpicThirdSubtask);
+
+        System.out.println(manager.getTaskById(3));
+        System.out.println(manager.getEpicById(2));
+        System.out.println(manager.getEpicById(1));
+        System.out.println(manager.getSubtaskById(7));
+        System.out.println(manager.getEpicById(1));
+        System.out.println(manager.getTaskById(4));
+
+        FileBackedTaskManager manager2 = new FileBackedTaskManager(new InMemoryHistoryManager(), "C:\\Users\\Aisha\\OneDrive\\Документы\\Documents\\file_for_manager.rtf");
+
+        manager2.loadFromFile(manager2.file);
+        System.out.println(manager2.getHistoryManager().getHistory());
+    }
 }
