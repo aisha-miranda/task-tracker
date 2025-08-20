@@ -1,0 +1,121 @@
+package service;
+
+import model.Epic;
+import model.Subtask;
+import model.Task;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class InMemoryTaskManager implements TaskManager {
+    private HashMap<Integer, Task> tasks;
+    private HashMap<Integer, Epic> epics;
+    private HashMap<Integer, Subtask> subtasks;
+    private final HistoryManager historyManager;
+    private int uniqueId = 1;
+
+    public InMemoryTaskManager(HistoryManager historyManager) {
+        this.historyManager = historyManager;
+        this.subtasks = new HashMap<>();
+        this.epics = new HashMap<>();
+        this.tasks = new HashMap<>();
+    }
+
+    public int getUniqueId() {
+        return uniqueId++;
+    }
+
+    public void createTask(Task task) {
+        task.setId(getUniqueId());
+        tasks.put(task.getId(), task);
+    }
+
+    public void createEpic(Epic epic) {
+        epic.setId(getUniqueId());
+        epics.put(epic.getId(), epic);
+    }
+
+    public void createSubtask(Subtask subtask) {
+        Epic epic = subtask.getEpic();
+        if (epics.containsKey(epic.getId())) {
+            subtask.setId(getUniqueId());
+            epic.addSubtask(subtask);
+            epic.updateStatus();
+            subtasks.put(subtask.getId(), subtask);
+        }
+    }
+
+    public void updateTask(int id, Task task) {
+        tasks.put(id, task);
+    }
+
+    public Task getTaskById(int id) {
+        historyManager.add(tasks.get(id));
+        return tasks.get(id);
+    }
+
+    public Epic getEpicById(int id) {
+        historyManager.add(epics.get(id));
+        return epics.get(id);
+    }
+
+    public Subtask getSubtaskById(int id) {
+        historyManager.add(subtasks.get(id));
+        return subtasks.get(id);
+    }
+
+    public void removeTaskById(int id) {
+        historyManager.remove(tasks.get(id));
+        tasks.remove(id);
+    }
+
+    public void removeEpicById(int id) {
+        if (epics.containsKey(id)) {
+            Epic epic = epics.get(id);
+            for (Subtask subtask : epic.getSubtasks()) {
+                historyManager.remove(subtask);
+                subtasks.remove(subtask.getId());
+            }
+            historyManager.remove(epic);
+            epics.remove(id);
+        }
+    }
+
+    public void removeSubtaskById(int id) {
+        if (subtasks.containsKey(id)) {
+            Subtask subtask = subtasks.get(id);
+            Epic epic = subtask.getEpic();
+            epic.removeSubtaskById(id);
+            epic.updateStatus();
+            historyManager.remove(subtask);
+            subtasks.remove(id);
+        }
+    }
+
+    public ArrayList<Task> getTasks() {
+        return new ArrayList<>(tasks.values());
+    }
+
+    public ArrayList<Epic> getEpics() {
+        return new ArrayList<>(epics.values());
+    }
+
+    public ArrayList<Subtask> getSubtasks() {
+        return new ArrayList<>(subtasks.values());
+    }
+
+    public ArrayList<Subtask> getSubtasksByEpic(Epic epic) {
+        return epic.getSubtasks();
+    }
+
+    public void removeAll() {
+        tasks.clear();
+        epics.clear();
+        subtasks.clear();
+    }
+
+    public HistoryManager getHistoryManager() {
+        return historyManager;
+    }
+
+}
