@@ -104,6 +104,18 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<>(subtasks.values());
     }
 
+    public HashMap<Integer, Task> getTasksMap(){
+        return tasks;
+    }
+
+    public HashMap <Integer, Epic> getEpicsMap(){
+        return epics;
+    }
+
+    public HashMap <Integer, Subtask> getSubtasksMap(){
+        return subtasks;
+    }
+
     public ArrayList<Subtask> getSubtasksByEpic(Epic epic) {
         return epic.getSubtasks();
     }
