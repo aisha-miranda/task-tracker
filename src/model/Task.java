@@ -1,17 +1,21 @@
 package model;
 
+import service.TaskManager;
+
 public class Task {
     protected int id;
     protected String title;
     protected String description;
     protected Statuses status;
     protected TaskType type;
+    protected TaskManager manager;
 
-    public Task(String title, String description) {
+    public Task(String title, String description, TaskManager manager) {
         this.title = title;
         this.description = description;
         this.status = Statuses.NEW;
         this.type = TaskType.TASK;
+        this.manager = manager;
     }
 
     public int getId() {
@@ -19,6 +23,10 @@ public class Task {
     }
 
     public void setId(int id) {
+        if (getTaskManager().getTasks().contains(this)){
+            getTaskManager().getTasksMap().remove(this.getId());
+            getTaskManager().getTasksMap().put(id, this);
+        }
         this.id = id;
     }
 
@@ -59,5 +67,12 @@ public class Task {
         return type;
     }
 
+    public TaskManager getTaskManager(){
+        return manager;
+    }
+
+    public void setTaskManager(TaskManager manager){
+        this.manager = manager;
+    }
 
 }

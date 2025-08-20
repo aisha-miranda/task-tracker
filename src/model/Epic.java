@@ -2,12 +2,13 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import service.TaskManager;
 
 public class Epic extends Task {
     private HashMap<Integer, Subtask> subtasks;
 
-    public Epic(String title, String description) {
-        super(title, description);
+    public Epic(String title, String description, TaskManager manager) {
+        super(title, description, manager);
         this.subtasks = new HashMap<>();
         this.type = TaskType.EPIC;
     }
@@ -57,5 +58,14 @@ public class Epic extends Task {
                 ", description=" + description +
                 ", id= " + getId() +
                 ", status= " + status + "}";
+    }
+
+    @Override
+    public void setId(int id) {
+        if (getTaskManager().getEpics().contains(this)){
+            getTaskManager().getEpicsMap().remove(this.getId());
+            getTaskManager().getEpicsMap().put(id, this);
+        }
+        this.id = id;
     }
 }

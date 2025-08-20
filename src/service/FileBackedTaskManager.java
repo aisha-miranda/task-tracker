@@ -142,19 +142,19 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
         Task task;
         if (type == TaskType.TASK) {
-            task = new Task(title, description);
+            task = new Task(title, description, this);
             task.setStatus(status);
             createTask(task);
             task.setId(id);
         } else if (type == TaskType.EPIC) {
-            task = new Epic(title, description);
+            task = new Epic(title, description, this);
             task.setStatus(status);
             createEpic((Epic) task);
             task.setId(id);
         } else {
             int epicId = Integer.parseInt(stringArray[5]);
             Epic epic = getEpicsMap().get(epicId);
-            task = new Subtask(title, description, epic);
+            task = new Subtask(title, description, epic, this);
             task.setStatus(status);
             createSubtask((Subtask) task);
             task.setId(id);
