@@ -9,6 +9,7 @@ public class Epic extends Task {
     public Epic(String title, String description) {
         super(title, description);
         this.subtasks = new HashMap<>();
+        this.type = TaskType.EPIC;
     }
 
     public void updateStatus() {

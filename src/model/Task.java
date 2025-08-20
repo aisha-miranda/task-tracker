@@ -5,11 +5,13 @@ public class Task {
     protected String title;
     protected String description;
     protected Statuses status;
+    protected TaskType type;
 
     public Task(String title, String description) {
         this.title = title;
         this.description = description;
         this.status = Statuses.NEW;
+        this.type = TaskType.TASK;
     }
 
     public int getId() {
