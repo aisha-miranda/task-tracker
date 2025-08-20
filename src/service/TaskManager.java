@@ -5,6 +5,7 @@ import model.Subtask;
 import model.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface TaskManager {
     void createTask(Task task);
@@ -20,8 +21,12 @@ public interface TaskManager {
     ArrayList<Task> getTasks();
     ArrayList<Epic> getEpics();
     ArrayList<Subtask> getSubtasks();
+    HashMap<Integer, Task> getTasksMap();
+    HashMap<Integer, Epic> getEpicsMap();
+    HashMap<Integer, Subtask> getSubtasksMap();
     ArrayList<Subtask> getSubtasksByEpic(Epic epic);
     void removeAll();
     int getUniqueId();
     HistoryManager getHistoryManager();
+
 }
