@@ -173,4 +173,30 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return taskIds;
     }
 
+    public void loadFromFile(File file) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+            while (bufferedReader.ready()) {
+                String line = bufferedReader.readLine();
+                if (line.isBlank()) {
+                    break;
+                }
+                fromString(line);
+            }
+            String line = bufferedReader.readLine();
+            if (!line.isBlank()) {
+                List<Integer> history = historyFromString(line);
+                for (int taskId: history){
+                    if (getTasksMap().containsKey(taskId)) {
+                        getHistoryManager().add(getTasksMap().get(taskId));
+                    } else if (getEpicsMap().containsKey(taskId)){
+                        getHistoryManager().add(getEpicsMap().get(taskId));
+                    } else if (getSubtasksMap().containsKey(taskId)){
+                        getHistoryManager().add(getSubtasksMap().get(taskId));
+                    }
+                }
+            }
+        } catch (IOException exception) {
+            throw new ManagerSaveException("Невозможно прочесть файл.");
+        }
+    }
 }
